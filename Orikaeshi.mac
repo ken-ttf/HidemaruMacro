@@ -1,0 +1,12 @@
+	setcompatiblemode 0x0F;
+
+	#wk = getconfig("AutoAdjustOrikaeshi");
+
+	if (#wk == 2) {
+		config "xAutoAdjustOrikaeshi:0";	//固定
+	} else if (#wk == 0) {
+		config "xAutoAdjustOrikaeshi:1";	//ウィンドウ幅に合わせる
+	} else if (#wk == 1) {
+		config "xAutoAdjustOrikaeshi:2";	//最大
+	}
+

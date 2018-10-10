@@ -1,0 +1,13 @@
+	disabledraw;
+
+	setcompatiblemode 0x0F;
+
+	#x = column;
+	#y = lineno;
+
+	golineend2;
+	delete;
+
+	moveto2 #x, #y;
+
+	enabledraw;

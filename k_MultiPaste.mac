@@ -1,0 +1,14 @@
+	setcompatiblemode 0x0F;
+
+	$LoopNum_s = input("ŒJ‚è•Ô‚µ“\‚è•t‚¯‰ñ”");
+	#LoopNum = val($LoopNum_s);
+
+	disabledraw;
+
+	#idx = 0;
+	while (#idx < #LoopNum) {
+		paste;
+		#idx = #idx + 1;
+	}
+
+	enabledraw;

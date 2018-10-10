@@ -1,0 +1,9 @@
+	setcompatiblemode 0x0F;
+
+	#x = column;
+	#y = lineno;
+
+	beginlinesel;
+	copy;
+
+	moveto2 #x, #y;

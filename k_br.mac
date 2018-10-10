@@ -1,0 +1,51 @@
+//	disabledraw;
+
+//XHTMLの判断
+//	先頭から2行目にXML宣言とDOCTYPE宣言があると仮定し、
+//	その中に「XHTML」の文言があればXHTMLファイルと見なす。
+
+	//カーソル位置を退避
+	#x1 = x;
+	#y1 = y;
+
+	//先頭から2行をコピー
+	gofiletop;
+	beginsel;
+	down 2;
+	copy;
+
+	//選択範囲を切り取り、配列変数に格納
+	beginclipboardread;
+	#i = 0;
+	$a[#i] = getclipboard;
+	while( $a[#i] != "" ){
+		#i = #i + 1;
+		$a[#i] = getclipboard;
+	}
+	
+	//配列変数に格納した文字列を結合して $ClipText に格納
+	$ClipText = "";
+	#j = 0;
+	while( #i > #j ){
+		$ClipText = $ClipText + $a[#j];
+		#j = #j + 1;
+	}
+	
+	//フラグ #XHTML_FLG を設定
+	#XHTML_FLG = strstr($ClipText, "XHTML");	//-1:XHTML以外  0以上:XHTML
+	
+	//元のカーソル位置に戻る
+	moveto #x1, #y1;
+
+//タグ挿入
+	if( #XHTML_FLG == -1 ){
+		insert "<br>\n";	//XHTML以外の場合
+	} else {
+		insert "<br />\n";	//XHTMLの場合
+	}
+
+//クリップボード履歴をひとつ戻す
+	getcliphist 1;
+
+//	enabledraw;
+	endmacro;

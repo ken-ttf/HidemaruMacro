@@ -1,0 +1,85 @@
+//	disabledraw;
+
+//パラメータの判断
+
+	//INIファイルからメニュー項目を読み込み
+	#i = 0;
+	call FormatNum #i , 2;
+	$menu[#i] = getinistr(macrodir + "\\kenmacro.ini","k_div","menu" + $$return);
+	while( $menu[#i] != "" ){
+		#i = #i + 1;
+		call FormatNum #i , 2;
+		$menu[#i] = getinistr(macrodir + "\\kenmacro.ini","k_div","menu" + $$return);
+	}
+	
+	//メニュー表示し、値を取得
+	menuarray $menu , #i;
+	#ret = result;
+	if( #ret == 0 )
+		endmacro;
+	else
+		#ret = #ret - 1;
+	
+	//選択したパラメータを変数に格納
+	if( $menu[#ret] == "パラメータなし" )
+		$param = "";
+	else
+		$param = " " + $menu[#ret];
+
+//選択状態の判断～タグ挿入
+
+	//選択状態の場合、選択範囲の前後にタグ挿入
+	if( selecting == 1 ){
+		//選択範囲を切り取り、配列変数に格納
+		cut;
+		beginclipboardread;
+		#i = 0;
+		$a[#i] = getclipboard;
+		while( $a[#i] != "" ){
+			#i = #i + 1;
+			$a[#i] = getclipboard;
+		}
+		
+		//配列変数に格納した文字列を結合して $OUT に格納
+		$OUT = "";
+		#j = 0;
+		while( #i > #j ){
+			$OUT = $OUT + $a[#j];
+			#j = #j + 1;
+		}
+		
+		//タグ挿入
+		if( rightstr($OUT,1) == "\n" ){
+			// $OUT の末尾が改行の場合
+			$OUT = "<div" + $param + ">\n" + leftstr($OUT, strlen($OUT) - 1) + "\n</div>\n";
+			insert $OUT;
+		}
+		else {
+			// $OUT の末尾が改行でない場合
+			$OUT = "<div" + $param + ">\n" + $OUT + "\n</div>";
+			insert $OUT;
+		}
+		
+		//クリップボード履歴をひとつ戻す
+		getcliphist 1;
+	}
+	//非選択状態の場合、カーソル位置にタグ挿入
+	else {
+		insert "<div" + $param + ">\n</div>\n";
+		left 7;
+	}
+	
+//	enabledraw;
+	endmacro;
+
+
+//FormatNum サブルーチン
+FormatNum:
+	$$ret = str(##1);
+	
+	while( strlen($$ret) < ##2 ){
+		$$ret = "0" + $$ret;
+	}
+	
+	return $$ret;
+

@@ -1,0 +1,54 @@
+//括弧の定義
+	$par_l="（";
+	$par_r="）";
+
+//	disabledraw;
+
+//選択状態の判断～タグ挿入
+
+	//選択状態の場合、選択範囲の前後にタグ挿入
+	if( selecting == 1 ){
+		//ルビテキストの入力
+		$RT = input("ルビテキストを入力してください。");
+		if ( $RT == "" ) endmacro;
+		
+		//選択範囲を切り取り、配列変数に格納
+		cut;
+		beginclipboardread;
+		#i = 0;
+		$a[#i] = getclipboard;
+		while( $a[#i] != "" ){
+			#i = #i + 1;
+			$a[#i] = getclipboard;
+		}
+		
+		//配列変数に格納した文字列を結合して $OUT に格納
+		$OUT = "";
+		#j = 0;
+		while( #i > #j ){
+			$OUT = $OUT + $a[#j];
+			#j = #j + 1;
+		}
+		
+		//タグ挿入
+		if( rightstr($OUT,1) == "\n" ){
+			// $OUT の末尾が改行の場合
+			$OUT = "<ruby><rb>" + leftstr($OUT, strlen($OUT) - 1) + "</rb><rp>" + $par_l + "</rp><rt>" + $RT + "</rt><rp>" + $par_r + "</rp></ruby>\n";
+			insert $OUT;
+		}
+		else {
+			// $OUT の末尾が改行でない場合
+			$OUT = "<ruby><rb>"+ $OUT + "</rb><rp>" + $par_l + "</rp><rt>"+ $RT + "</rt><rp>" + $par_r + "</rp></ruby>";
+			insert $OUT;
+		}
+		
+		//クリップボード履歴をひとつ戻す
+		getcliphist 1;
+	}
+//	//非選択状態の場合、実行中断
+//	else {
+//		endmacro;
+//	}
+
+//	enabledraw;
+	endmacro;

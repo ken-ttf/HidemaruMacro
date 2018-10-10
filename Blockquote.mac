@@ -1,0 +1,10 @@
+	setcompatiblemode 0x0F;
+
+	#wk = getconfig("Blockquote");
+
+	if (#wk == 0) {
+		config "xBlockquote:1";	//行頭のタブ文字で段落全体をインデントする
+	} else if (#wk == 1) {
+		config "xBlockquote:0";	//行頭のタブ文字で段落全体をインデントしない
+	}
+
