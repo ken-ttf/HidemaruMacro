@@ -1,0 +1,8 @@
+//
+//  行数カウントマクロ
+//
+
+	if (selecting) {
+		message str(selendy - seltopy) + " 行" , "行数カウント";
+	}
+
