@@ -1,8 +1,8 @@
 //
-//  s”ƒJƒEƒ“ƒgƒ}ƒNƒ
+//  è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆãƒã‚¯ãƒ­
 //
 
 	if (selecting) {
-		message str(selendy - seltopy) + " s" , "s”ƒJƒEƒ“ƒg";
+		message str(selendy - seltopy) + " è¡Œ" , "è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ";
 	}
 

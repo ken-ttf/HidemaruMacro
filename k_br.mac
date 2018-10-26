@@ -1,20 +1,20 @@
 //	disabledraw;
 
-//XHTML�̔��f
-//	�擪����2�s�ڂ�XML�錾��DOCTYPE�錾������Ɖ��肵�A
-//	���̒��ɁuXHTML�v�̕����������XHTML�t�@�C���ƌ��Ȃ��B
+//XHTMLの判断
+//	先頭から2行目にXML宣言とDOCTYPE宣言があると仮定し、
+//	その中に「XHTML」の文言があればXHTMLファイルと見なす。
 
-	//�J�[�\���ʒu��ޔ�
+	//カーソル位置を退避
 	#x1 = x;
 	#y1 = y;
 
-	//�擪����2�s���R�s�[
+	//先頭から2行をコピー
 	gofiletop;
 	beginsel;
 	down 2;
 	copy;
 
-	//�I��͈͂�؂���A�z��ϐ��Ɋi�[
+	//選択範囲を切り取り、配列変数に格納
 	beginclipboardread;
 	#i = 0;
 	$a[#i] = getclipboard;
@@ -23,7 +23,7 @@
 		$a[#i] = getclipboard;
 	}
 	
-	//�z��ϐ��Ɋi�[������������������� $ClipText �Ɋi�[
+	//配列変数に格納した文字列を結合して $ClipText に格納
 	$ClipText = "";
 	#j = 0;
 	while( #i > #j ){
@@ -31,20 +31,20 @@
 		#j = #j + 1;
 	}
 	
-	//�t���O #XHTML_FLG ��ݒ�
-	#XHTML_FLG = strstr($ClipText, "XHTML");	//-1:XHTML�ȊO  0�ȏ�:XHTML
+	//フラグ #XHTML_FLG を設定
+	#XHTML_FLG = strstr($ClipText, "XHTML");	//-1:XHTML以外  0以上:XHTML
 	
-	//���̃J�[�\���ʒu�ɖ߂�
+	//元のカーソル位置に戻る
 	moveto #x1, #y1;
 
-//�^�O�}��
+//タグ挿入
 	if( #XHTML_FLG == -1 ){
-		insert "<br>\n";	//XHTML�ȊO�̏ꍇ
+		insert "<br>\n";	//XHTML以外の場合
 	} else {
-		insert "<br />\n";	//XHTML�̏ꍇ
+		insert "<br />\n";	//XHTMLの場合
 	}
 
-//�N���b�v�{�[�h�������ЂƂ߂�
+//クリップボード履歴をひとつ戻す
 	getcliphist 1;
 
 //	enabledraw;

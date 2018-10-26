@@ -1,16 +1,16 @@
 //	disabledraw;
 
-//�������x���擾
+//強調レベル取得
 	menu "em","strong";
 	#ret = result;
 	
 	if( #ret == 0 ) endmacro;
 
-//�I����Ԃ̔��f�`�^�O�}��
+//選択状態の判断～タグ挿入
 
-	//�I����Ԃ̏ꍇ�A�I��͈͂̑O��Ƀ^�O�}��
+	//選択状態の場合、選択範囲の前後にタグ挿入
 	if( selecting == 1 ){
-		//�I��͈͂�؂���A�z��ϐ��Ɋi�[
+		//選択範囲を切り取り、配列変数に格納
 		cut;
 		beginclipboardread;
 		#i = 0;
@@ -20,7 +20,7 @@
 			$a[#i] = getclipboard;
 		}
 		
-		//�z��ϐ��Ɋi�[������������������� $OUT �Ɋi�[
+		//配列変数に格納した文字列を結合して $OUT に格納
 		$OUT = "";
 		#j = 0;
 		while( #i > #j ){
@@ -28,7 +28,7 @@
 			#j = #j + 1;
 		}
 		
-		//�^�O�}��
+		//タグ挿入
 		if( #ret == 1 ){
 			$OUT = "<em>" + leftstr($OUT, strlen($OUT)) + "</em>";
 		}
@@ -37,10 +37,10 @@
 		}
 		insert $OUT;
 		
-		//�N���b�v�{�[�h�������ЂƂ߂�
+		//クリップボード履歴をひとつ戻す
 		getcliphist 1;
 	}
-	//��I����Ԃ̏ꍇ�A�J�[�\���ʒu�Ƀ^�O�}��
+	//非選択状態の場合、カーソル位置にタグ挿入
 	else {
 		if( #ret == 1 ){
 			$OUT = "<em></em>";

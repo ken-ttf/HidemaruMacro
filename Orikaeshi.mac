@@ -3,10 +3,10 @@
 	#wk = getconfig("AutoAdjustOrikaeshi");
 
 	if (#wk == 2) {
-		config "xAutoAdjustOrikaeshi:0";	//ŒÅ’è
+		config "xAutoAdjustOrikaeshi:0";	//å›ºå®š
 	} else if (#wk == 0) {
-		config "xAutoAdjustOrikaeshi:1";	//ƒEƒBƒ“ƒhƒE•‚É‡‚í‚¹‚é
+		config "xAutoAdjustOrikaeshi:1";	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¹…ã«åˆã‚ã›ã‚‹
 	} else if (#wk == 1) {
-		config "xAutoAdjustOrikaeshi:2";	//Å‘å
+		config "xAutoAdjustOrikaeshi:2";	//æœ€å¤§
 	}
 
