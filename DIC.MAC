@@ -2,5 +2,5 @@ if (!selecting)
 
 selectword;
 $word = gettext(seltopx, seltopy, selendx, selendy);
-run "C:\\Program Files\\DDwin\\ddwin.exe ,1,æ¨™æº–è¾æ›¸,," + $word;
+run "C:\\Program Files\\DDwin\\ddwin.exe ,1,•W€«‘,," + $word;
 
