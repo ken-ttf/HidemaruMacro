@@ -1,10 +1,10 @@
 //	disabledraw;
 
-//選択状態の判断～タグ挿入
+//�I����Ԃ̔��f�`�^�O�}��
 
-	//選択状態の場合、選択範囲の前後にタグ挿入
+	//�I����Ԃ̏ꍇ�A�I��͈͂̑O��Ƀ^�O�}��
 	if( selecting == 1 ){
-		//選択範囲を切り取り、配列変数に格納
+		//�I��͈͂�؂���A�z��ϐ��Ɋi�[
 		cut;
 		beginclipboardread;
 		#i = 0;
@@ -14,7 +14,7 @@
 			$a[#i] = getclipboard;
 		}
 		
-		//配列変数に格納した文字列を結合して $OUT に格納
+		//�z��ϐ��Ɋi�[������������������� $OUT �Ɋi�[
 		$OUT = "";
 		#j = 0;
 		while( #i > #j ){
@@ -22,22 +22,22 @@
 			#j = #j + 1;
 		}
 		
-		//タグ挿入
+		//�^�O�}��
 		if( rightstr($OUT,1) == "\n" ){
-			// $OUT の末尾が改行の場合
+			// $OUT �̖��������s�̏ꍇ
 			$OUT = "<p>" + leftstr($OUT, strlen($OUT) - 1) + "</p>\n";
 			insert $OUT;
 		}
 		else {
-			// $OUT の末尾が改行でない場合
+			// $OUT �̖��������s�łȂ��ꍇ
 			$OUT = "<p>" + $OUT + "</p>";
 			insert $OUT;
 		}
 		
-		//クリップボード履歴をひとつ戻す
+		//�N���b�v�{�[�h�������ЂƂ߂�
 		getcliphist 1;
 	}
-	//非選択状態の場合、カーソル位置にタグ挿入
+	//��I����Ԃ̏ꍇ�A�J�[�\���ʒu�Ƀ^�O�}��
 	else {
 		insert "<p></p>\n";
 		left 5;

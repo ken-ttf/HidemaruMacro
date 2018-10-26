@@ -1,6 +1,6 @@
 	setcompatiblemode 0x0F;
 
-	$LoopNum_s = input("ç¹°ã‚Šè¿”ã—è²¼ã‚Šä»˜ã‘å›æ•°");
+	$LoopNum_s = input("ŒJ‚è•Ô‚µ“\‚è•t‚¯‰ñ”");
 	#LoopNum = val($LoopNum_s);
 
 	disabledraw;

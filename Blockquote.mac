@@ -3,8 +3,8 @@
 	#wk = getconfig("Blockquote");
 
 	if (#wk == 0) {
-		config "xBlockquote:1";	//è¡Œé ­ã®ã‚¿ãƒ–æ–‡å­—ã§æ®µè½å…¨ä½“ã‚’ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã™ã‚‹
+		config "xBlockquote:1";	//s“ª‚Ìƒ^ƒu•¶Žš‚Å’i—Ž‘S‘Ì‚ðƒCƒ“ƒfƒ“ƒg‚·‚é
 	} else if (#wk == 1) {
-		config "xBlockquote:0";	//è¡Œé ­ã®ã‚¿ãƒ–æ–‡å­—ã§æ®µè½å…¨ä½“ã‚’ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã—ãªã„
+		config "xBlockquote:0";	//s“ª‚Ìƒ^ƒu•¶Žš‚Å’i—Ž‘S‘Ì‚ðƒCƒ“ƒfƒ“ƒg‚µ‚È‚¢
 	}
 
