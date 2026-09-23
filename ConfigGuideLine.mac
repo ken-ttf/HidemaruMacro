@@ -1,3 +1,11 @@
 	setcompatiblemode 0x0F;
-	config "xGuideLine:1 xGuideLineInterval:4";
+
+	#wk = getconfig("GuideLine");
+
+	if (#wk == 0) {
+		config "xGuideLine:1 xGuideLineInterval:4";
+	} else if (#wk == 1) {
+		config "xGuideLine:0";
+	}
+
 	endmacro;
