@@ -1,0 +1,6 @@
+	setcompatiblemode 0x10F;
+	finddown;
+	golinetop;
+	insert "Å@";
+	left;
+	down;
