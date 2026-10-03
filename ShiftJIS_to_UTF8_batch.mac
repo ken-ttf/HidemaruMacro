@@ -1,0 +1,118 @@
+﻿// Shift-JIS -> UTF-8 一括変換マクロ
+// 秀丸エディタ Ver9.19以降（JavaScript対応）
+// 指定フォルダ直下の *.txt を処理します。
+// UTF-8は変更せず、Shift-JISのみUTF-8(BOMなし)へ変換します。
+
+$folder = input("処理対象フォルダを入力してください。\r\n例: C:\\Data\\Text", "");
+if (!result) endmacro;
+
+js{
+    var folder = hidemaru.getVar("$folder");
+    var fso = hidemaru.createObject("Scripting.FileSystemObject");
+
+    if (!fso.FolderExists(folder)) {
+        hidemaruGlobal.message("指定されたフォルダが存在しません。\r\n\r\n" + folder);
+    } else {
+        var targetFolder = fso.GetFolder(folder);
+        var log = "";
+        var total = 0;
+        var converted = 0;
+        var unchanged = 0;
+        var skipped = 0;
+        var failed = 0;
+
+        log += "秀丸エディタ 文字コード変換ログ\r\n";
+        log += "========================================\r\n";
+        log += "対象フォルダ: " + folder + "\r\n";
+        log += "処理日時: " + new Date().toLocaleString() + "\r\n";
+        log += "\r\n";
+        log += "ファイル名\t結果\r\n";
+        log += "----------------------------------------\r\n";
+
+        // 処理専用の非表示秀丸ウィンドウを作成。
+        hidemaruGlobal.openfile("/h");
+
+        var files = targetFolder.Files;
+        var e = new Enumerator(files);
+
+        for (; !e.atEnd(); e.moveNext()) {
+            var file = e.item();
+            var path = file.Path;
+            var name = file.Name;
+
+            if (name.length < 4 || name.substr(name.length - 4).toLowerCase() != ".txt") {
+                continue;
+            }
+
+            total++;
+
+            // ファイルを秀丸の自動判定で開く。
+            hidemaruGlobal.openfile("/h /n \"" + path + "\"");
+
+            var enc = hidemaruGlobal.encode() & 0x3f;
+
+            if (enc == 1) {
+                // setencode(6, 1, 2):
+                // UTF-8へ変換、BOMなし。
+                // 第2引数=1なので、本文を維持したまま変換。
+                if (hidemaruGlobal.readonly() != 0) {
+                    log += name + "\t変換不可（読み取り専用）\r\n";
+                    skipped++;
+                } else {
+                    hidemaruGlobal.setencode(6, 1, 2);
+                    var saveResult = hidemaruGlobal.save();
+
+                    if (saveResult) {
+                        log += name + "\tUTF-8へ変換\r\n";
+                        converted++;
+                    } else {
+                        log += name + "\t変換失敗\r\n";
+                        failed++;
+                    }
+                }
+            } else if (enc == 6) {
+                log += name + "\t変換なし（UTF-8）\r\n";
+                unchanged++;
+            } else if (enc == 2) {
+                log += name + "\t変換なし（UTF-16）\r\n";
+                unchanged++;
+            } else if (enc == 3) {
+                log += name + "\t変換なし（EUC）\r\n";
+                unchanged++;
+            } else if (enc == 4) {
+                log += name + "\t変換なし（JIS）\r\n";
+                unchanged++;
+            } else {
+                log += name + "\t変換なし（その他の文字コード）\r\n";
+                skipped++;
+            }
+
+            // 処理対象ファイル用のウィンドウを閉じる。
+            hidemaruGlobal.closehidemaru(0);
+        }
+
+        // 処理用の空ウィンドウを閉じる。
+        hidemaruGlobal.closehidemaru(0);
+
+        log += "----------------------------------------\r\n";
+        log += "合計: " + total + "\r\n";
+        log += "変換: " + converted + "\r\n";
+        log += "変換なし: " + unchanged + "\r\n";
+        log += "対象外/変換不可: " + skipped + "\r\n";
+        log += "変換失敗: " + failed + "\r\n";
+
+        // 元の秀丸ウィンドウに戻って、ログを新規文書として表示。
+        hidemaruGlobal.newfile();
+        hidemaru.setTotalText(log);
+        hidemaruGlobal.showwindow(1);
+
+        hidemaruGlobal.message(
+            "処理が完了しました。\r\n\r\n" +
+            "対象: " + total + " 件\r\n" +
+            "変換: " + converted + " 件\r\n" +
+            "変換なし: " + unchanged + " 件\r\n" +
+            "対象外/変換不可: " + skipped + " 件\r\n" +
+            "変換失敗: " + failed + " 件"
+        );
+    }
+}
