@@ -1,0 +1,26 @@
+	setcompatiblemode 0x10F;
+
+	golinetop;
+	searchdown "\t";
+	searchdown "\t";
+	searchdown "\t";
+	searchdown "\t";
+	beginsel;
+	right;
+	insertreturn;
+
+	insert "<dt>åoå±ì_</dt><dd>";
+	searchdown "\t";
+	beginsel;
+	right;
+	insert "</dd><dt>ê_ã∆</dt><dd>";
+	searchdown "\t";
+	beginsel;
+	right;
+	insert "</dd><dt>ÇªÇÃëº</dt><dd>";
+	golineend;
+	insert "</dd>";
+
+	golinetop;
+	down;
+	insertreturn;
